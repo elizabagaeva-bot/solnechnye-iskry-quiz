@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F7F2EA">
+  <title>Ваше Солнце горит или гаснет? — тест Элизы Купеевой</title>
+  <meta name="description" content="Короткий тест, который поможет понять, в каком состоянии сейчас ваш внутренний ресурс.">
+  <style>
+    :root {
+      --milk: #F7F2EA;
+      --beige: #EAE0D3;
+      --brown: #382B27;
+      --terracotta: #B66D52;
+      --blue: #263B55;
+      --gold: #B49A70;
+      --muted: #766861;
+      --white: #FFFCF8;
+      --line: rgba(56, 43, 39, .15);
+      --shadow: 0 24px 70px rgba(56, 43, 39, .09);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--milk);
+      color: var(--brown);
+      font-family: "Aptos", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.55;
+      min-height: 100vh;
+    }
+    button { font: inherit; }
+    .page {
+      width: min(100% - 32px, 880px);
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 2px 24px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .brand { color: var(--blue); font-weight: 700; }
+    .top-note { text-align: right; }
+    .shell {
+      position: relative;
+      overflow: hidden;
+      background: var(--white);
+      border: 1px solid rgba(180,154,112,.38);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      min-height: 550px;
+    }
+    .shell::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border: 1px solid rgba(180,154,112,.35);
+      border-radius: 50%;
+      top: -150px;
+      right: -95px;
+      pointer-events: none;
+    }
+    .shell::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border: 1px solid rgba(38,59,85,.12);
+      border-radius: 50%;
+      bottom: -100px;
+      left: -75px;
+      pointer-events: none;
+    }
+    .screen {
+      display: none;
+      position: relative;
+      z-index: 1;
+      padding: clamp(28px, 6vw, 64px);
+      animation: fadeIn .35s ease both;
+    }
+    .screen.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(7px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--terracotta);
+      font-size: 11px;
+      letter-spacing: .18em;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+    }
+    h1, h2, p { margin-top: 0; }
+    h1, h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      letter-spacing: -.035em;
+      line-height: 1.08;
+    }
+    h1 {
+      max-width: 640px;
+      font-size: clamp(42px, 7vw, 72px);
+      margin-bottom: 24px;
+    }
+    h1 em { color: var(--terracotta); font-weight: 400; }
+    h2 {
+      font-size: clamp(32px, 5vw, 48px);
+      margin-bottom: 22px;
+    }
+    .lead {
+      max-width: 560px;
+      font-size: clamp(16px, 2.1vw, 19px);
+      color: #5F5049;
+      margin-bottom: 28px;
+    }
+    .intro-copy {
+      max-width: 540px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 30px 0 34px;
+    }
+    .pill {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--milk);
+    }
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      border: 0;
+      border-radius: 99px;
+      padding: 15px 24px;
+      min-height: 54px;
+      background: var(--blue);
+      color: white;
+      font-weight: 650;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+      box-shadow: 0 8px 22px rgba(38,59,85,.15);
+    }
+    .button:hover { transform: translateY(-2px); background: #1D3047; }
+    .button:focus-visible, .answer:focus-visible, .text-button:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 3px;
+    }
+    .button .arrow { font-size: 20px; line-height: 1; }
+    .quiet-note {
+      margin: 16px 0 0;
+      font-size: 12px;
+      color: #8A7B73;
+    }
+    .progress-wrap { margin: 0 0 36px; }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    .progress-track {
+      height: 4px;
+      border-radius: 10px;
+      background: var(--beige);
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 10%;
+      background: var(--terracotta);
+      border-radius: inherit;
+      transition: width .25s ease;
+    }
+    .question {
+      max-width: 650px;
+      min-height: 112px;
+      font-size: clamp(30px, 4.5vw, 43px);
+      margin-bottom: 30px;
+    }
+    .answers {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 610px;
+    }
+    .answer {
+      min-height: 66px;
+      padding: 16px 18px;
+      border-radius: 15px;
+      text-align: left;
+      border: 1px solid var(--line);
+      background: var(--white);
+      color: var(--brown);
+      cursor: pointer;
+      transition: border .18s ease, background .18s ease, transform .18s ease;
+    }
+    .answer:hover { border-color: var(--terracotta); transform: translateY(-1px); }
+    .answer.selected {
+      border-color: var(--terracotta);
+      background: #F7EDE7;
+      box-shadow: inset 0 0 0 1px var(--terracotta);
+    }
+    .answer .answer-title { display: block; font-weight: 650; }
+    .answer .answer-sub { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+    .nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 32px;
+      max-width: 610px;
+    }
+    .text-button {
+      padding: 12px 0;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      text-decoration: underline;
+      text-decoration-color: rgba(118,104,97,.4);
+      text-underline-offset: 4px;
+      cursor: pointer;
+    }
+    .button:disabled { opacity: .42; cursor: not-allowed; transform: none; box-shadow: none; }
+    .result-kicker {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 99px;
+      background: var(--beige);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      margin-bottom: 24px;
+    }
+    .result-score {
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      margin: 4px 0 24px;
+      color: var(--terracotta);
+    }
+    .result-score strong {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 54px;
+      font-weight: 400;
+      line-height: 1;
+    }
+    .result-score span { color: var(--muted); font-size: 14px; }
+    .result-text {
+      max-width: 620px;
+      color: #5F5049;
+      font-size: 16px;
+    }
+    .result-box {
+      max-width: 620px;
+      padding: 22px 24px;
+      margin: 28px 0;
+      background: var(--milk);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 14px 14px 0;
+    }
+    .result-box h3 {
+      margin: 0 0 12px;
+      color: var(--blue);
+      font-size: 14px;
+    }
+    .result-box ul { margin: 0; padding-left: 19px; color: #5F5049; }
+    .result-box li { padding: 3px 0 3px 3px; }
+    .disclaimer {
+      max-width: 620px;
+      margin: 28px 0 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: #85766E;
+      font-size: 12px;
+    }
+    .signature {
+      margin-top: 22px;
+      color: var(--blue);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 18px;
+    }
+    .result-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      margin-top: 28px;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px 4px 0;
+      color: #8A7B73;
+      font-size: 11px;
+    }
+    @media (max-width: 560px) {
+      .page { width: min(100% - 20px, 880px); padding-top: 18px; }
+      .topline { font-size: 9px; padding: 0 2px 16px; }
+      .shell { border-radius: 20px; min-height: 0; }
+      .screen { padding: 30px 22px 36px; }
+      .answers { grid-template-columns: 1fr; }
+      .answer { min-height: 60px; }
+      .question { min-height: 0; }
+      .nav-row { margin-top: 24px; }
+      .button { padding: 14px 18px; }
+      .footer { font-size: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topline">
+      <span class="brand">Элиза Купеева</span>
+      <span class="top-note">Астрология с психологическим подходом</span>
+    </div>
+
+    <section class="shell" aria-live="polite">
+      <div class="screen active" id="intro-screen">
+        <div class="eyebrow">Короткий тест · 3 минуты</div>
+        <h1>Ваше Солнце<br><em>горит или гаснет?</em></h1>
+        <p class="lead">Иногда усталость — это не про нехватку сна. А ощущение, что вы слишком долго живёте не из себя.</p>
+        <p class="intro-copy">Ответьте на 10 утверждений и узнайте, в каком состоянии сейчас ваш внутренний ресурс. Здесь нет правильных или неправильных ответов — выбирайте то, что честно отражает ваше состояние.</p>
+        <div class="meta-row">
+          <span class="pill">10 утверждений</span>
+          <span class="pill">Автоматический результат</span>
+          <span class="pill">Без регистрации</span>
+        </div>
+        <button class="button" id="start-btn">Пройти тест <span class="arrow">→</span></button>
+        <p class="quiet-note">Отвечайте так, как чувствуете себя сейчас, а не как хотелось бы.</p>
+      </div>
+
+      <div class="screen" id="question-screen">
+        <div class="progress-wrap">
+          <div class="progress-label"><span id="progress-step">Вопрос 1 из 10</span><span id="progress-percent">10%</span></div>
+          <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+        </div>
+        <div class="eyebrow">Прислушайтесь к себе</div>
+        <h2 class="question" id="question-text"></h2>
+        <div class="answers" id="answers">
+          <button class="answer" data-value="1">
+            <span class="answer-title">Да, это про меня</span>
+            <span class="answer-sub">Узнаю своё состояние</span>
+          </button>
+          <button class="answer" data-value="0">
+            <span class="answer-title">Нет, не совсем</span>
+            <span class="answer-sub">Сейчас это не про меня</span>
+          </button>
+        </div>
+        <div class="nav-row">
+          <button class="text-button" id="back-btn">← Назад</button>
+          <button class="button" id="next-btn" disabled>Далее <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+      <div class="screen" id="result-screen">
+        <div class="eyebrow">Ваш результат</div>
+        <span class="result-kicker" id="result-kicker">Ваш солнечный ресурс</span>
+        <h2 id="result-title"></h2>
+        <div class="result-score"><strong id="score-number">0</strong><span>из 10 баллов</span></div>
+        <div class="result-text" id="result-description"></div>
+        <div class="result-box">
+          <h3>Что важно сейчас</h3>
+          <ul id="result-recommendations"></ul>
+        </div>
+        <p class="disclaimer">Этот тест не является диагнозом и не заменяет консультацию специалиста. Это мягкий способ заметить своё состояние и услышать себя чуть глубже.</p>
+        <div class="signature">Элиза Купеева</div>
+        <div class="result-actions">
+          <button class="button" id="restart-btn">Пройти ещё раз <span class="arrow">↻</span></button>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <span>lifestyle astrology · self-care</span>
+      <span>Ваш внутренний свет заслуживает внимания</span>
+    </div>
+  </main>
+
+  <script>
+    const questions = [
+      "Вам сложно просыпаться даже после отдыха?",
+      "Вы редко чувствуете вдохновение?",
+      "Вы живёте больше через «надо», чем через «хочу»?",
+      "Вам сложно чувствовать радость от жизни?",
+      "Вы часто откладываете себя на потом?",
+      "Вам кажется, что внутри стало меньше огня?",
+      "Вы давно не чувствовали настоящего интереса к жизни?",
+      "Вы устали даже от мыслей о действиях?",
+      "Вам сложно проявляться и быть собой?",
+      "Вы ощущаете внутреннюю пустоту?"
+    ];
+
+    const answers = Array(questions.length).fill(null);
+    let current = 0;
+
+    const introScreen = document.getElementById("intro-screen");
+    const questionScreen = document.getElementById("question-screen");
+    const resultScreen = document.getElementById("result-screen");
+    const questionText = document.getElementById("question-text");
+    const progressStep = document.getElementById("progress-step");
+    const progressPercent = document.getElementById("progress-percent");
+    const progressBar = document.getElementById("progress-bar");
+    const nextBtn = document.getElementById("next-btn");
+    const backBtn = document.getElementById("back-btn");
+    const answerButtons = [...document.querySelectorAll(".answer")];
+
+    function showScreen(screen) {
+      [introScreen, questionScreen, resultScreen].forEach(s => s.classList.remove("active"));
+      screen.classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderQuestion() {
+      questionText.textContent = questions[current];
+      progressStep.textContent = `Вопрос ${current + 1} из ${questions.length}`;
+      const pct = Math.round(((current + 1) / questions.length) * 100);
+      progressPercent.textContent = `${pct}%`;
+      progressBar.style.width = `${pct}%`;
+      backBtn.style.visibility = current === 0 ? "hidden" : "visible";
+      answerButtons.forEach(btn => {
+        const selected = answers[current] === Number(btn.dataset.value);
+        btn.classList.toggle("selected", selected);
+        btn.setAttribute("aria-pressed", String(selected));
+      });
+      nextBtn.disabled = answers[current] === null;
+      nextBtn.innerHTML = current === questions.length - 1
+        ? 'Узнать результат <span class="arrow">→</span>'
+        : 'Далее <span class="arrow">→</span>';
+    }
+
+    function showResult() {
+      const score = answers.reduce((sum, value) => sum + (value === 1 ? 1 : 0), 0);
+      document.getElementById("score-number").textContent = score;
+      const title = document.getElementById("result-title");
+      const description = document.getElementById("result-description");
+      const list = document.getElementById("result-recommendations");
+      const kicker = document.getElementById("result-kicker");
+      let data;
+
+      if (score <= 3) {
+        data = {
+          kicker: "0–3 балла · Ресурс сохранён",
+          title: "Ваше Солнце не истощено",
+          description: "Сейчас у вас ещё есть внутренний ресурс, но периодически вы можете терять контакт с собой. Важно не ждать, пока усталость накопится, а регулярно замечать свои желания и потребности.",
+          recommendations: [
+            "Не игнорировать свои желания.",
+            "Оставлять место для отдыха.",
+            "Чаще спрашивать себя: «А чего хочу я?»"
+          ]
+        };
+      } else if (score <= 6) {
+        data = {
+          kicker: "4–6 баллов · Ресурс снижается",
+          title: "Ваш солнечный ресурс начал снижаться",
+          description: "Похоже, вы слишком долго живёте через напряжение и внутреннее давление. Когда «надо» становится больше, чем «хочу», интерес к жизни может постепенно тускнеть. Сейчас важно отнестись к себе внимательнее.",
+          recommendations: [
+            "Снизить внутреннее напряжение.",
+            "Перестать требовать от себя невозможного.",
+            "Постепенно возвращать контакт со своими желаниями."
+          ]
+        };
+      } else {
+        data = {
+          kicker: "7–10 баллов · Ресурсу нужно внимание",
+          title: "Ваше внутреннее Солнце сейчас сильно ослаблено",
+          description: "Ваши ответы показывают, что усталость и потеря интереса занимают заметное место в вашей жизни. Возможно, вы слишком долго откладывали себя на потом. Сейчас особенно важно не обесценивать своё состояние и возвращать внутреннюю опору постепенно, без требований немедленно всё исправить.",
+          recommendations: [
+            "Не обесценивать своё состояние.",
+            "Перестать сравнивать себя с другими.",
+            "Постепенно восстанавливать внутреннюю опору."
+          ]
+        };
+      }
+
+      kicker.textContent = data.kicker;
+      title.textContent = data.title;
+      description.textContent = data.description;
+      list.replaceChildren(...data.recommendations.map(text => {
+        const li = document.createElement("li");
+        li.textContent = text;
+        return li;
+      }));
+      showScreen(resultScreen);
+    }
+
+    document.getElementById("start-btn").addEventListener("click", () => {
+      current = 0;
+      renderQuestion();
+      showScreen(questionScreen);
+    });
+
+    answerButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        answers[current] = Number(btn.dataset.value);
+        renderQuestion();
+      });
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (answers[current] === null) return;
+      if (current < questions.length - 1) {
+        current += 1;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    });
+
+    backBtn.addEventListener("click", () => {
+      if (current > 0) {
+        current -= 1;
+        renderQuestion();
+      }
+    });
+
+    document.getElementById("restart-btn").addEventListener("click", () => {
+      answers.fill(null);
+      current = 0;
+      showScreen(introScreen);
+    });
+  </script>
+</body>
+</html>
